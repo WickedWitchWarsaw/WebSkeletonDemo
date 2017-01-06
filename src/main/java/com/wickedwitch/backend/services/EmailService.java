@@ -9,7 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 public interface EmailService {
 
     /**
-     * Sends an Email wit the contact in the Feedback Pojo.
+     * Sends an Email with the contact in the Feedback Pojo.
      * @param feedbackPojo
      */
     void sendFeedbackEmail(FeedbackPojo feedbackPojo);

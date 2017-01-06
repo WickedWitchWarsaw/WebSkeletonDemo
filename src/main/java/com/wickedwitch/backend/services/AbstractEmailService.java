@@ -21,6 +21,7 @@ public abstract class AbstractEmailService implements EmailService {
         message.setFrom(feedbackPojo.getEmail());
         message.setSubject("WickedDemoWebSkeleton: sent test feedback "
                 + feedbackPojo.getFirstName()
+                + " "
                 + feedbackPojo.getLastName());
         message.setText(feedbackPojo.getFeedback());
         return message;

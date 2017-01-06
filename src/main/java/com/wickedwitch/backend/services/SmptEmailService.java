@@ -22,7 +22,7 @@ public class SmptEmailService extends AbstractEmailService {
 
     @Override
     public void sendGenericEmailMessage(SimpleMailMessage message) {
-        LOG.debug("Sending email for: ()", message);
+        LOG.debug("Sending email for: {}", message);
         mailSender.send(message);
         LOG.info("Email SENT!!");
 
