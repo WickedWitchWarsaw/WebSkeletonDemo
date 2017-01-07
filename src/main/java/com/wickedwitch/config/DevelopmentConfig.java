@@ -2,6 +2,8 @@ package com.wickedwitch.config;
 
 import com.wickedwitch.backend.services.EmailService;
 import com.wickedwitch.backend.services.MockEmailService;
+import org.h2.server.web.WebServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,4 +21,13 @@ public class DevelopmentConfig {
     public EmailService emailService() {
         return new MockEmailService();
     }
+
+
+    @Bean
+    public ServletRegistrationBean h2ConsoleServletRegistration() {
+        ServletRegistrationBean bean = new ServletRegistrationBean(new WebServlet());
+        bean.addUrlMappings("/console/*");
+        return bean;
+    }
+
 }
