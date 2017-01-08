@@ -1,5 +1,7 @@
 package com.wickedwitch.backend.persistance.domain.backend;
 
+import com.wickedwitch.enums.RolesEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -22,7 +24,12 @@ public class Role implements Serializable {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    public Role() {
+    public Role() {}
+
+    //full constructor
+    public Role(RolesEnum rolesEnum){
+        this.id = rolesEnum.getId();
+        this.name = rolesEnum.getRoleName();
     }
 
     public int getId() {

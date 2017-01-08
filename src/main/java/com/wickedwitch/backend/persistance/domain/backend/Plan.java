@@ -1,5 +1,7 @@
 package com.wickedwitch.backend.persistance.domain.backend;
 
+import com.wickedwitch.enums.PlansEnum;
+import com.wickedwitch.enums.RolesEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,12 @@ public class Plan implements Serializable {
 
     //Default constructor
     public Plan(){
+    }
+
+    //Full constructor
+    public Plan(PlansEnum plansEnum){
+        this.id = plansEnum.getId();
+        this.name = plansEnum.getPlanName();
     }
 
     public int getId() {
