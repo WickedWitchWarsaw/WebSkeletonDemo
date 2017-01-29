@@ -7,7 +7,9 @@ import com.wickedwitch.backend.persistance.repositories.PlanRepository;
 import com.wickedwitch.backend.persistance.repositories.RoleRepository;
 import com.wickedwitch.backend.persistance.repositories.UserRepository;
 import com.wickedwitch.enums.PlansEnum;
+import org.apache.tomcat.util.buf.B2CConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,9 +31,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public User createUser(User user, PlansEnum planEnum, Set<UserRole> userRoles) {
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
         Plan plan = new Plan(planEnum);
         if (!planRepository.exists(planEnum.getId())) {
             plan = planRepository.save(plan);

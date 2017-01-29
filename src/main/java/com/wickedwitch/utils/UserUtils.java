@@ -13,8 +13,8 @@ public class UserUtils {
 
     public static User createBasicUser() {
         User user = new User();
-        user.setUsername("basicUser");
-        user.setPassword("password");
+        user.setUsername("wickedWitch");
+        user.setPassword("qwerty123");
         user.setFirstName("firstName");
         user.setLastName("lastName");
         user.setEmail("basicUser@user.com");
