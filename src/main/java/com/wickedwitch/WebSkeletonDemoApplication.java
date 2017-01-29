@@ -32,7 +32,11 @@ public class WebSkeletonDemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = UserUtils.createBasicUser();
+
+		String username = "wickedwitch";
+		String email = "wickedwitch@gmail.com";
+
+		User user = UserUtils.createBasicUser(username, email);
 		Set<UserRole> userRoles = new HashSet<>();
 		userRoles.add(new UserRole(user, new Role(RolesEnum.PRO)));
 

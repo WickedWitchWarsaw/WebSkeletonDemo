@@ -11,13 +11,13 @@ public class UserUtils {
         throw new AssertionError("Class not instantiable - Singleton");
     }
 
-    public static User createBasicUser() {
+    public static User createBasicUser(String username, String email) {
         User user = new User();
-        user.setUsername("wickedWitch");
+        user.setUsername(username);
         user.setPassword("qwerty123");
+        user.setEmail(email);
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setEmail("basicUser@user.com");
         user.setCountry("POL");
         user.setProfileImageUrl("https://www.blabla.image.com/basicuser.jpg");
         user.setEnabled(true);
