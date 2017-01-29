@@ -1,5 +1,6 @@
 package com.wickedwitch.config;
 
+import com.wickedwitch.backend.services.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -20,7 +21,10 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    public Environment environment;
+    private UserSecurityService userSecurityService;
+
+    @Autowired
+    private Environment environment;
 
     //Array of public URLs
     private static final String[] PUBLIC_MATCHERS = {
@@ -65,9 +69,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder managerBuilder) throws Exception{
         managerBuilder
-                .inMemoryAuthentication()
-                .withUser("user")
-                .password("password")
-                .roles("USER");
+                .userDetailsService(userSecurityService);
+
+        // IN MEMORY AUTHENTICATION
+//                .inMemoryAuthentication()
+//                .withUser("user")
+//                .password("password")
+//                .roles("USER");
+
     }
 }
