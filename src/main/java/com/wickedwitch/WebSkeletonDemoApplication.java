@@ -10,6 +10,7 @@ import com.wickedwitch.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,16 @@ public class WebSkeletonDemoApplication implements CommandLineRunner {
 	@Autowired
 	private UserService userService;
 
+	@Value("${webmaster.username}")
+	private String webmasterUsername;
+
+	@Value("${webmaster.password}")
+	private String webmasterPassword;
+
+	@Value("${webmaster.email}")
+	private String webmasterEmail;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(WebSkeletonDemoApplication.class, args);
 	}
@@ -33,12 +44,10 @@ public class WebSkeletonDemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		String username = "wickedwitch";
-		String email = "wickedwitch@gmail.com";
-
-		User user = UserUtils.createBasicUser(username, email);
+		User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
+		user.setPassword(webmasterPassword);
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, new Role(RolesEnum.PRO)));
+		userRoles.add(new UserRole(user, new Role(RolesEnum.ADMIN)));
 
 		LOG.debug("Creating new user with userName {}" + user.getUsername());
 
