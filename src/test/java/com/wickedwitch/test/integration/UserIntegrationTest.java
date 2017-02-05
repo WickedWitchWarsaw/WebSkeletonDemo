@@ -32,16 +32,7 @@ import static com.wickedwitch.utils.UserUtils.createBasicUser;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WebSkeletonDemoApplication.class)
-public class RepositoriesIntegrationTest {
-
-    @Autowired
-    private PlanRepository planRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
+public class UserIntegrationTest extends AbstractIntegrationTest {
 
     @Rule
     public TestName testName = new TestName();
@@ -66,12 +57,12 @@ public class RepositoriesIntegrationTest {
     public void testCreateNewRole() throws Exception {
         Role userRole = createRole(RolesEnum.BASIC);
         roleRepository.save(userRole);
-        Role retreiveRole = roleRepository.findOne(RolesEnum.BASIC.getId());
-        Assert.assertNotNull(retreiveRole);
+        Role retrieveRole = roleRepository.findOne(RolesEnum.BASIC.getId());
+        Assert.assertNotNull(retrieveRole);
     }
 
     @Test
-    public void createNewUser() throws Exception{
+    public void createNewUser() throws Exception {
 //        Plan basicPlan = createPlan(PlansEnum.BASIC);
 //        planRepository.save(basicPlan);
 //
@@ -101,14 +92,13 @@ public class RepositoriesIntegrationTest {
         Assert.assertNotNull(newlyCreatedUser.getPlan());
         Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
         Set<UserRole> newlyCreatedUserUserRoles = newlyCreatedUser.getUserRoles();
-        for(UserRole ur : newlyCreatedUserUserRoles){
+        for (UserRole ur : newlyCreatedUserUserRoles) {
             Assert.assertNotNull(ur.getRole());
             Assert.assertNotNull(ur.getRole().getId());
         }
     }
 
-
-    public void testDeleteUser() throws Exception{
+    public void testDeleteUser() throws Exception {
 
         String username = testName.getMethodName();
         String email = testName.getMethodName() + "@gmail.com";
@@ -116,31 +106,5 @@ public class RepositoriesIntegrationTest {
         User basicUser = createUser(username, email);
         userRepository.delete(basicUser.getId());
     }
-
-    private Plan createPlan(PlansEnum plansEnum) { return new Plan(plansEnum); }
-
-    private Role createRole(RolesEnum rolesEnum){
-        return new Role(rolesEnum);
-    }
-
-    private User createUser(String username, String email) {
-        Plan basicPlan = createPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        User basicUser = UserUtils.createBasicUser(username, email);
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        roleRepository.save(basicRole);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-        basicUser = userRepository.save(basicUser);
-        return basicUser;
-    }
-
-
 }
+

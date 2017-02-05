@@ -48,8 +48,11 @@ public class User implements Serializable, UserDetails {
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserRole> userRoles = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<ResetPasswordToken> resetPasswordTokens = new HashSet<>();
 
     public User() {
     }
@@ -150,9 +153,13 @@ public class User implements Serializable, UserDetails {
         this.userRoles = userRoles;
     }
 
+    public Set<ResetPasswordToken> getResetPasswordTokens() {
+        return resetPasswordTokens;
+    }
 
-
-
+    public void setResetPasswordTokens(Set<ResetPasswordToken> resetPasswordTokens) {
+        this.resetPasswordTokens = resetPasswordTokens;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
